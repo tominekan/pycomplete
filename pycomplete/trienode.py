@@ -10,7 +10,7 @@ For runtime analysis purposes, we're assuming that n = the number of children in
 from typing import Union, Any
 
 class TrieNode:
-    def __init__(self, value: Any, parent: Union["TrieNode", None] = None):
+    def __init__(self, value: Any, parent: Union["TrieNode", None] = None) -> None:
         """
         O(1)
 
@@ -30,7 +30,7 @@ class TrieNode:
 
         self._children = {}
     
-    def set_parent(self, new_parent: Union["TrieNode", None]):
+    def set_parent(self, new_parent: Union["TrieNode", None]) -> None:
         """
         O(1)
 
@@ -44,7 +44,7 @@ class TrieNode:
 
         self._parent = new_parent
     
-    def parent(self):
+    def parent(self) -> Union["TrieNode", None]:
         """
         O(1)
 
@@ -53,7 +53,7 @@ class TrieNode:
 
         return self._parent
     
-    def add_child(self, child: "TrieNode"):
+    def add_child(self, child: "TrieNode") -> None:
         """
         O(1)
 
@@ -68,11 +68,12 @@ class TrieNode:
         self._children[child._value] = child
         child._parent = self
 
-    def remove_child(self, child: "TrieNode"):
+    def remove_child(self, child: "TrieNode") -> "TrieNode":
         """
         O(1)
 
         Removes `child` from set of children. It also sets the parent of `child` to None. 
+        Returns the child that we removed.
         Raises ValueError if `child` is not a child of the TrieNode
 
         Parameters
@@ -84,10 +85,10 @@ class TrieNode:
             raise ValueError("Child does not exist")
         
         child._parent = None
-        self._children.pop(child._value)
+        return self._children.pop(child._value)
     
 
-    def exists_child(self, value: Any):
+    def exists_child(self, value: Any) -> bool:
         """
         O(1)
 
@@ -101,7 +102,7 @@ class TrieNode:
 
         return value in self._children
 
-    def get_node_from_value(self, value: Any):
+    def get_node_from_value(self, value: Any) -> "TrieNode":
         """
         O(1)
 
@@ -119,27 +120,27 @@ class TrieNode:
         return self._children[value]
 
 
-    def get_children_values(self):
+    def get_children_values(self) -> list:
         """
         O(n)
 
         Returns all the values of the children Nodes 
         """
 
-        return self._children.keys()
+        return list(self._children.keys())
     
 
-    def get_children_nodes(self):
+    def get_children_nodes(self) -> list:
         """
         O(n)
 
         Returns all the children Nodes 
         """
 
-        return self._children.values()
+        return list(self._children.values())
 
 
-    def is_leaf(self):
+    def is_leaf(self) -> bool:
         """
         O(1)
 
