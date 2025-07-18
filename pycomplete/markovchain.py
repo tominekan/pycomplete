@@ -60,7 +60,7 @@ class MarkovChain:
         else:
             raise KeyError(f"{item} does not exist in the Markov Chain.")
     
-    def ikeliest(self) -> Any:
+    def get_likeliest(self) -> Any:
         """
         O(1)
 
