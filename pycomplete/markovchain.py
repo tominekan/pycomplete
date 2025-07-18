@@ -53,6 +53,7 @@ class MarkovChain:
         Parameters:
         ---
         item: Any
+            The item we want to remove.
         """
         if (item in self.children):
             self.children[item] = max(self.children[item] - 1, 0)
