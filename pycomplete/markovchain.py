@@ -1,10 +1,11 @@
 """
-This allows us to use and manipulate a bunch first-order Markov Chains.
+This is the class for a first order Markov chains.
 """
+
 from typing import Any
 
-class FOMarkov:
-    def __init__(self) -> None:
+class MarkovChain:
+    def __init__(self) -> None: 
         """
         Initializes a first order Markov chain with an empty set of items it points towards.
 
@@ -55,41 +56,27 @@ class FOMarkov:
         """
         if (item in self.children):
             self.children[item] = max(self.children[item] - 1, 0)
-        
-        raise KeyError(f"{item} does not exist in the Markov Chain.")
+        else:
+            raise KeyError(f"{item} does not exist in the Markov Chain.")
     
-    def get_likeliest(self) -> Any:
+    def ikeliest(self) -> Any:
         """
         O(1)
 
         Returns the item with the higest frequency. 
         """
         return self.likeliest
-
-
-class MarkovChain:
-    def __init__(self) -> None:
-        """
-        O(1)
-
-        Initializes an empty set first-order Markov chain.
-        """
-
-        self.chains = {}
     
-    def add_pair(self, key: Any, value: Any):
+    def contains(self, value: Any) -> bool:
         """
         O(1)
 
-        Adds `value` to the Markov chain keyed by `key`. The Markov chain does not exist, then we create a new one.
-        """
-    
-    def create_chain(self, key: Any):
-        """
-        O(1)
+        Checks if the Markov chain contains `value`.
 
-        Creates a new Markov chain with a specific name. Raises ValueError if the key exists
+        Parameters:
+        ---
+        value: Any
+            The value we want to search for
         """
-        if (key not in self.chains):
-            self.chains[key] = FOMarkov()
+        return value in self.children
         
