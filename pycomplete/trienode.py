@@ -194,7 +194,7 @@ class TrieNode:
 
         return self._value
     
-    def arent(self) -> Union["TrieNode", None]:
+    def parent(self) -> Union["TrieNode", None]:
         """
         O(1)
 
