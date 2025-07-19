@@ -194,11 +194,3 @@ class TrieNode:
 
         return self._value
     
-    def parent(self) -> Union["TrieNode", None]:
-        """
-        O(1)
-
-        Returns the parent value of this TrieNode
-        """
-
-        return self._parent
