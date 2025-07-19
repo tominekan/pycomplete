@@ -6,20 +6,11 @@ is a, the number of words in the trie is n.
 
 TODO: THINK ABOUT RUNTIMES LOL
 
-
 A lot of the walking down operations correspond to the height of the tree,
 which should techincally be the length of the longest string for the uncompressed trie,
-I think it should still techincally be the same for the longest trie.
-
-
-SOME THOUGHTS: IF THERE ARE 
-TODO: LEBRON
-FIXME: SDSD
-HACK: NON
-NOTE: LER
-BUG: EDSD
-XXX: SDSD
+I think it should still be the same for the compressed trie.
 """
+
 from trienode import TrieNode
 from typing import Union
 
@@ -65,7 +56,7 @@ class Trie:
         curr_node.add_child(TrieNode(None))
     
 
-    def remove_word(self, word: str):
+    def remove_word(self, word: str) -> None:
         """
         Removes `word` from the Trie structure. If the word doesn't exist in the Trie, then we raise ValueError.
 
@@ -77,7 +68,20 @@ class Trie:
 
         curr_node = self._walk_word(word)
         if curr_node == None:
-            print("")
+            raise ValueError(f"\"{word}\" does not exist within Trie")
+    
+
+    def exists(self, word: str) -> bool:
+        """
+        Checks if `word` exists in the Trie structure. 
+
+        Parameters:
+        ---
+        word: str
+            The word we want to check the existence of
+        """
+
+        return self._walk_word(word) != None
 
     
     def _walk_word(self, word) -> Union[TrieNode, None]:
@@ -104,6 +108,7 @@ class Trie:
             return curr_node
         else:
             return None
+    
 
         
 
