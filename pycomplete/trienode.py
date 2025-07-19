@@ -29,6 +29,7 @@ class TrieNode:
         self._parent = parent
 
         self._children = {}
+        self._num_children = 0
     
     def set_parent(self, new_parent: Union["TrieNode", None]) -> None:
         """
@@ -58,15 +59,20 @@ class TrieNode:
         O(1)
 
         Adds a child node to this current node. It also automatically sets the parent of
-        this node to this node too.
+        this node to this node too. If the child TrieNode already exists, we raise ValueError.
 
         Parameters
         ---
         child: TrieNode
             The child TrieNode we want to add
         """
+
+        if child._value in self._children:
+            raise ValueError("Child TrieNode already exists")
+        
         self._children[child._value] = child
         child._parent = self
+        self._num_children += 1
 
     def remove_child(self, child: "TrieNode") -> "TrieNode":
         """
@@ -81,10 +87,12 @@ class TrieNode:
         child: TrieNode
             The child TrieNode we want to remove
         """
+
         if child._value not in self._children:
             raise ValueError("Child does not exist")
         
         child._parent = None
+        self._num_children = max(self._num_children - 1, 0)
         return self._children.pop(child._value)
     
 
@@ -146,5 +154,14 @@ class TrieNode:
 
         Returns whether this current node is a leaf or not.
         """
-        return len(self._children) == 0
+        return self._num_children == 0
+
+    def num_children(self) -> int:
+        """
+        O(1)
+
+        Returns the number of children the TrieNode has
+        """
+
+        return self._num_children
     

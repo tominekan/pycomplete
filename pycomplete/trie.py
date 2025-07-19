@@ -69,6 +69,7 @@ class Trie:
         curr_node = self._walk_word(word)
         if curr_node == None:
             raise ValueError(f"\"{word}\" does not exist within Trie")
+        
     
 
     def exists(self, word: str) -> bool:
