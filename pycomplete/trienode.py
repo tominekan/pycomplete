@@ -81,7 +81,7 @@ class TrieNode:
         child: TrieNode
             The child TrieNode we want to remove
         """
-        if (child._value not in self._children):
+        if child._value not in self._children:
             raise ValueError("Child does not exist")
         
         child._parent = None
@@ -115,7 +115,7 @@ class TrieNode:
             The value we want to extract
             
         """
-        if (value not in self._children):
+        if value not in self._children:
             raise ValueError(f"\"{value}\" does not exist as a child")
         return self._children[value]
 
