@@ -150,14 +150,6 @@ class Trie:
         word = "".join(chars)[::-1]
         return word
 
-    def _bfs_mod(self, curr_node: TrieNode, num: int):
-        #TODO: IMPLEMENT BFS MODIFICATION TO USE RECURSION
-        pass
-        if curr_node.exists_child(None):
-            if (curr_node.num_children() == 1):
-                return (self._word_from(curr_node), num)
-
-
     def complete_word(self, chars: str, num: int = 2) -> list:
         """
         Finds the words closest to the sequence of characters specified in `chars`.
@@ -204,7 +196,7 @@ class Trie:
 
                 # Add all the children to the list 
                 new_level += node.get_children_nodes()
-                
+
             # Replace the new level
             curr_level = new_level
         
