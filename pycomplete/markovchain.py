@@ -44,11 +44,15 @@ class MarkovChain:
 
     def remove_item(self, item: Any) -> None:
         """
-        O(log n)
+        O(log n) sorta kinda idk tbh
 
         Decreases the frequency associated with item by 1. 
         If the item already has a zero frequency associated with it, then this program does nothing.
         If the item doesn't exist, then we raise a KeyError
+
+        Finding runtime is a bit weird here because we're assuming that each call to remove_item is equally likely
+        to have any of the items as an input, so normally it'll take O(1) time, but when we call the likeliest item, it takes O(nlogn) time.
+        This means the total runtime over all the inputs is O(n) + O(nlogn), which is O(nlogn), divided by n is O(logn)
 
         Parameters:
         ---
