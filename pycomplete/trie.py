@@ -67,10 +67,21 @@ class Trie:
         """
 
         curr_node = self._walk_word(word)
-        if curr_node == None:
+        
+        if curr_node is None:
             raise ValueError(f"\"{word}\" does not exist within Trie")
         
-    
+
+        # Remove the node the marks the end of the word
+        curr_node.remove_child_value(None)
+
+        # NOTE: The idea is to start from the last word, removing all leaves
+        # and going up the tree until we find a TrieNode with multiple children 
+        while curr_node.is_leaf():  # type: ignore
+            parent = curr_node.parent()  # type: ignore
+            parent.remove_child(curr_node) # type: ignore
+            curr_node = parent
+
 
     def exists(self, word: str) -> bool:
         """
@@ -87,6 +98,7 @@ class Trie:
     
     def _walk_word(self, word) -> Union[TrieNode, None]:
         """
+        HELPER
         Walks down the suffix trie to find the node corresponding to the last letter of `word`
 
         Parameters
@@ -110,6 +122,94 @@ class Trie:
         else:
             return None
     
+    def _word_from(self, node: TrieNode):
+        """
+        HELPER
+        Finds the string associated with the current node.
+        
+        The idea is to walk up from the current node to the root, adding str, and build from there.
+        We want to be as asymptotically efficient as possible, so it's better to first add the characters to a list, 
+        and then build the word from the set of characters.
+
+        Parameters:
+        ---
+        node: TrieNode
+            The TrideNode we want to construct the words from.
+        """
+
+        chars = []
+        curr_node = node
+
+        # Walk up the Trie, adding the letters at each node until we reach the root node
+        # We add each character to a list
+        while curr_node is not None:
+            chars.append(curr_node.get_value()) # This is an O(1) operation
+            curr_node = curr_node.parent()
+        
+        # Combine the characters in the list and reverse it
+        word = "".join(chars)[::-1]
+        return word
+
+    def _bfs_mod(self, curr_node: TrieNode, num: int):
+        #TODO: IMPLEMENT BFS MODIFICATION TO USE RECURSION
+        pass
+        if curr_node.exists_child(None):
+            if (curr_node.num_children() == 1):
+                return (self._word_from(curr_node), num)
+
+
+    def complete_word(self, chars: str, num: int = 2) -> list:
+        """
+        Finds the words closest to the sequence of characters specified in `chars`.
+
+        Parameters
+        ---
+        chars: str
+            The sequence of characters we want to search
+        
+        num: int
+            The number of words we want to get. Generally speaking, the more words want to get, the longer this method will run.
+            By default, we want to suggest 2 words.
+        """
+
+        curr_node = self._walk_word(chars)
+        all_words = []
+        num_words = 0
+        dist = 0
+
+        # This means that we've fallen off the Trie structure 
+        # There are no more possible words we can get from this
+        if curr_node is None:
+            return []
+        
+        # If we're already at a word, we'd want to recommend this
+        if curr_node.exists_child(None):
+            all_words.append(chars)
+            num_words += 1
+        
+        # Do a luh BFS magic until we get the appropriate number of words we want
+        curr_level = curr_node.get_children_nodes()
+
+        while (num_words < num) or (len(curr_level) == 0):
+            new_level = []
+            for node in curr_level:
+                # This implies that a word ends
+                if node.exists_child(None):
+                    all_words.append(self._word_from(node))
+                    num_words += 1
+
+                    # Stop the for loop once we get the number of suggestions 
+                    if num_words == num:
+                        break
+
+                # Add all the children to the list 
+                new_level += node.get_children_nodes()
+                
+            # Replace the new level
+            curr_level = new_level
+        
+
+        return all_words
 
         
 
