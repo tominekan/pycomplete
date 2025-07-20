@@ -1,6 +1,6 @@
 # PyComplete
 
-An autocomplete tool written in Python. Might rewrite in C++ I get this working.
+An autocomplete tool written in Python. Might rewrite in C++ if I get this working, might not tho, who knows.
 
 ## Thoughts
 I'd need
