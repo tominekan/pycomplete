@@ -15,9 +15,9 @@ class MarkovChain:
             This really be anything we use to identify the content.
         """
 
-        self.children = {}
-        self.likeliest = None
-        self.max_freq = 0
+        self._children = {}
+        self._likeliest = None
+        self._max_freq = 0
     
     def add_item(self, item: Any) -> None:
         """
@@ -32,19 +32,19 @@ class MarkovChain:
             The item we want to add to the Markov chain
         """
 
-        if (item not in self.children):
-            self.children[item] = 1
+        if (item not in self._children):
+            self._children[item] = 1
         else:
-            self.children[item] += 1
+            self._children[item] += 1
 
-        if (self.children[item] > self.max_freq):
-            self.max_freq = self.children[item]
-            self.likeliest = item
+        if (self._children[item] > self._max_freq):
+            self._max_freq = self._children[item]
+            self._likeliest = item
     
 
     def remove_item(self, item: Any) -> None:
         """
-        O(1)
+        O(log n)
 
         Decreases the frequency associated with item by 1. 
         If the item already has a zero frequency associated with it, then this program does nothing.
@@ -55,18 +55,31 @@ class MarkovChain:
         item: Any
             The item we want to remove.
         """
-        if (item in self.children):
-            self.children[item] = max(self.children[item] - 1, 0)
+
+        if (item in self._children):
+            self._children[item] = max(self._children[item] - 1, 0)
+
+
+            # If we decrement the likeliest item, then we want to update the most likely number
+            # However, 
+            if (item == self._likeliest):
+                # Sort frequency in decreasing order
+                self._likeliest = sorted(self._children, key=lambda elem: self._children[elem], reverse=True)[0]
+                self._max_freq = self._children[self._likeliest]
+
+                if self._max_freq == 0:
+                    self._likeliest = None
         else:
             raise KeyError(f"{item} does not exist in the Markov Chain.")
     
-    def get_likeliest(self) -> Any:
+    def likeliest(self) -> Any:
         """
         O(1)
 
-        Returns the item with the higest frequency. 
+        Returns the item with the highest frequency. 
         """
-        return self.likeliest
+
+        return self._likeliest
     
     def contains(self, value: Any) -> bool:
         """
@@ -79,5 +92,8 @@ class MarkovChain:
         value: Any
             The value we want to search for
         """
-        return value in self.children
+        
+        if (value in self._children):
+            return self._children[value] != 0
+        return False
         
