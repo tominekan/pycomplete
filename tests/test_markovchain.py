@@ -1,4 +1,6 @@
 from pycomplete.markovchain import MarkovChain
+import pytest
+
 
 # TEST: initialization
 def test_init():
@@ -70,3 +72,12 @@ def test_remove_item_likeliest():
     m.add_item("who")
     m.remove_item("leroy")
     assert m.likeliest() == "who"
+
+def test_remote_item_nonexistent():
+    """
+    Test that removing and item that doesn't exist throws an error
+    """
+    with pytest.raises(KeyError):
+        m = MarkovChain()
+        m.remove_item("LEBRON JAMES")
+    
