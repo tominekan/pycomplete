@@ -77,6 +77,21 @@ class ChainSet:
         
         self._chains[key].remove_item(value)
     
+
+    def exists(self, key: Any) -> bool:
+        """
+        O(1)
+
+        Checks if the key exists in the set of chains
+
+        Parameters:
+        ---
+        key: Any
+            The key to the Markov chain
+        """
+
+        return key in self._chains
+    
     def likeliest(self, key: Any) -> Any:
         """
         O(1)
