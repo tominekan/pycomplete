@@ -1,3 +1,7 @@
+"""
+Test markovchain.py
+"""
+
 from pycomplete.markovchain import MarkovChain
 import pytest
 
