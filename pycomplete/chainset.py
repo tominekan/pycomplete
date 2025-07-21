@@ -13,7 +13,7 @@ class ChainSet:
         Initializes an empty set first-order Markov chain.
         """
 
-        self.chains = {}
+        self._chains = {}
     
     def add(self, key: Any, value: Any) -> None:
         """
@@ -30,8 +30,8 @@ class ChainSet:
             The value we want to add 
         """
 
-        if key in self.chains:
-            self.chains[key].add_item(value)
+        if key in self._chains:
+            self._chains[key].add_item(value)
     
     def create_chain(self, key: Any) -> None:
         """
@@ -45,8 +45,8 @@ class ChainSet:
             The key of the Markov chain.
         """
 
-        if key not in self.chains:
-            self.chains[key] = MarkovChain()
+        if key not in self._chains:
+            self._chains[key] = MarkovChain()
         else:
             raise ValueError(f"Key \"{key}\" already exists")
     
@@ -65,13 +65,13 @@ class ChainSet:
             The value we want to remove 
         """
 
-        if key not in self.chains:
+        if key not in self._chains:
             raise ValueError(f"Key \"{key}\" does not exist.")
         
-        if not self.chains[key].contains(value):
+        if not self._chains[key].contains(value):
             raise ValueError(f"Markov chain does not contain  \"{value}\"")
         
-        self.chains[key].remove_item(value)
+        self._chains[key].remove_item(value)
     
     def get_likely(self, key: Any) -> Any:
         """
@@ -84,7 +84,7 @@ class ChainSet:
         key: Any
             The key to the Markov chain
         """
-        if key not in self.chains:
+        if key not in self._chains:
             raise ValueError(f"\"{key}\" does not exist.")
         
-        return self.chains[key].likeliest()
+        return self._chains[key].likeliest()
