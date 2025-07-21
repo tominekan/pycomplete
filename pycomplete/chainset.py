@@ -30,8 +30,12 @@ class ChainSet:
             The value we want to add 
         """
 
-        if key in self._chains:
-            self._chains[key].add_item(value)
+
+        if key not in self._chains:
+            self.create_chain(key)
+            
+        self._chains[key].add_item(value)
+            
     
     def create_chain(self, key: Any) -> None:
         """
