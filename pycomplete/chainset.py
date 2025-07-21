@@ -33,7 +33,7 @@ class ChainSet:
 
         if key not in self._chains:
             self.create_chain(key)
-            
+
         self._chains[key].add_item(value)
             
     
@@ -77,7 +77,7 @@ class ChainSet:
         
         self._chains[key].remove_item(value)
     
-    def get_likely(self, key: Any) -> Any:
+    def likeliest(self, key: Any) -> Any:
         """
         O(1)
 
