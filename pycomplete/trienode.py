@@ -95,12 +95,12 @@ class TrieNode:
         self._num_children = max(self._num_children - 1, 0)
         return self._children.pop(child._value)
 
-    def remove_child(self, value: Any) -> Any:
+    def remove_child(self, value: Any) -> "TrieNode":
         """
         O(1)
 
         Removes `value` from the set of children. It also sets the parent of the child
-        associated to `value` to None. Returns the value of the child TrieNode we removed.
+        associated to `value` to None. Returns the child TrieNode we removed.
 
         Parameters
         ---
@@ -113,7 +113,7 @@ class TrieNode:
         
         self._children[value]._parent = None
         self._num_children = max(self._num_children - 1, 0)
-        return self._children.pop(value)._value
+        return self._children.pop(value)
     
 
     def exists_child(self, value: Any) -> bool:
