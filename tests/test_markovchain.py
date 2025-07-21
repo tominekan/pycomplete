@@ -1,5 +1,5 @@
 """
-Test markovchain.py
+Test pycomplete/markovchain.py
 """
 
 from pycomplete.markovchain import MarkovChain

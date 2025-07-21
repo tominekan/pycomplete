@@ -1,5 +1,5 @@
 """
-Test chainset.py
+Test pycomplete/chainset.py
 """
 
 from pycomplete.chainset import ChainSet
