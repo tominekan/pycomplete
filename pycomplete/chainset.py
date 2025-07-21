@@ -30,7 +30,6 @@ class ChainSet:
             The value we want to add 
         """
 
-
         if key not in self._chains:
             self.create_chain(key)
 
@@ -103,6 +102,7 @@ class ChainSet:
         key: Any
             The key to the Markov chain
         """
+        
         if key not in self._chains:
             raise ValueError(f"\"{key}\" does not exist.")
         
