@@ -14,7 +14,8 @@ I might rewrite in C++ if I get this working, might not tho, who knows.
 - [ ] Implement a method to cache both Trie and ChainSet structures so we don't have to build it every time we want to use it
     - This will likely mean that I need to use the struct or pickle package, not sure yet though
 - [ ] Maybe figure out a way to get this done over the cloud
-    - [ ] Look at databricks
+    - [ ] Look at DataBricks Community Tier
+- [ ] Be more consistent with the method names
 
 
 ### Notes
