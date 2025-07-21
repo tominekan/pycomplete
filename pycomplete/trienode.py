@@ -54,7 +54,7 @@ class TrieNode:
 
         return self._parent
     
-    def add_child(self, child: "TrieNode") -> None:
+    def add_child_node(self, child: "TrieNode") -> None:
         """
         O(1)
 
@@ -74,7 +74,7 @@ class TrieNode:
         child._parent = self
         self._num_children += 1
 
-    def remove_child(self, child: "TrieNode") -> "TrieNode":
+    def remove_child_node(self, child: "TrieNode") -> "TrieNode":
         """
         O(1)
 
@@ -95,7 +95,7 @@ class TrieNode:
         self._num_children = max(self._num_children - 1, 0)
         return self._children.pop(child._value)
 
-    def remove_child_value(self, value: Any) -> Any:
+    def remove_child(self, value: Any) -> Any:
         """
         O(1)
 
@@ -130,7 +130,7 @@ class TrieNode:
 
         return value in self._children
 
-    def get_node_from_value(self, value: Any) -> "TrieNode":
+    def get_node(self, value: Any) -> "TrieNode":
         """
         O(1)
 
@@ -185,7 +185,7 @@ class TrieNode:
 
         return self._num_children
 
-    def get_value(self) -> Any:
+    def value(self) -> Any:
         """
         O(1)
 

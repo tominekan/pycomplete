@@ -49,11 +49,11 @@ class Trie:
 
         for char in word:
             if not curr_node.exists_child(char):
-                curr_node.add_child(TrieNode(char))
-                curr_node = curr_node.get_node_from_value(char)
+                curr_node.add_child_node(TrieNode(char))
+                curr_node = curr_node.get_node(char)
         
         # NONE IS OUR END CHARACTER
-        curr_node.add_child(TrieNode(None))
+        curr_node.add_child_node(TrieNode(None))
     
 
     def remove_word(self, word: str) -> None:
@@ -73,7 +73,7 @@ class Trie:
         
 
         # Remove the node the marks the end of the word
-        curr_node.remove_child_value(None)
+        curr_node.remove_child(None)
 
         # NOTE: The idea is to start from the last word, removing all leaves
         # and going up the tree until we find a TrieNode with multiple children 
@@ -111,7 +111,7 @@ class Trie:
 
         for char in word:
             if curr_node.exists_child(char):
-                curr_node = curr_node.get_node_from_value(char)
+                curr_node = curr_node.get_node(char)
             else:
                 return None
         
@@ -143,7 +143,7 @@ class Trie:
         # Walk up the Trie, adding the letters at each node until we reach the root node
         # We add each character to a list
         while curr_node is not None:
-            chars.append(curr_node.get_value()) # This is an O(1) operation
+            chars.append(curr_node.value()) # This is an O(1) operation
             curr_node = curr_node.parent()
         
         # Combine the characters in the list and reverse it
