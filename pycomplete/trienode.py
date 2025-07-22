@@ -194,3 +194,5 @@ class TrieNode:
 
         return self._value
     
+    def __str__(self) -> str:
+        return str(self._value)
