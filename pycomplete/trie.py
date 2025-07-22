@@ -17,9 +17,9 @@ from typing import Union
 class Trie:
     def __init__(self, content: str) -> None:
         """
-        FIXME: THIS IS WRONG LMFAOOO
-        Assuming size of string is n. O(n) 
-        Builds and compresses a Trie on all the set of words
+        TODO: think about runtime
+        Assuming size of string is n. O(n) is super hard
+        Builds and compresses (NOT QUITE YET) a Trie on the
 
         Parameters:
         ---
@@ -28,6 +28,9 @@ class Trie:
         """
 
         words = content.split(" ")
+        # Now we remove all empty strings/whitespace
+        words = [word for word in words if not (word.isspace() or (len(word) == 0))]
+
         self._root = TrieNode("")
 
         for word in words:
@@ -37,7 +40,7 @@ class Trie:
     def add_word(self, word: str) -> None:
         """
         
-        Adds a word to the Trie Structure.
+        Adds a word to the Trie Structure. If the word already exists, do nothing.
 
         Parameters:
         ---
@@ -45,15 +48,16 @@ class Trie:
             The word we want to add to the Trie structure
         """
 
-        curr_node = self._root
+        if not self.exists(word):
+            curr_node = self._root
 
-        for char in word:
-            if not curr_node.exists_child(char):
-                curr_node.add_child_node(TrieNode(char))
-                curr_node = curr_node.get_node(char)
-        
-        # NONE IS OUR END CHARACTER
-        curr_node.add_child_node(TrieNode(None))
+            for char in word:
+                if not curr_node.exists_child(char):
+                    curr_node.add_child_node(TrieNode(char))
+                    curr_node = curr_node.get_node(char)
+            
+            # NONE IS OUR END CHARACTER
+            curr_node.add_child_node(TrieNode(None))
     
 
     def remove_word(self, word: str) -> None:
@@ -67,19 +71,19 @@ class Trie:
         """
 
         curr_node = self._walk_word(word)
-        
+
         if curr_node is None:
             raise ValueError(f"\"{word}\" does not exist within Trie")
         
 
         # Remove the node the marks the end of the word
-        curr_node.remove_child(None)
+        curr_node.remove_child(None) # Remove None Values
 
         # NOTE: The idea is to start from the last word, removing all leaves
         # and going up the tree until we find a TrieNode with multiple children 
         while curr_node.is_leaf():  # type: ignore
             parent = curr_node.parent()  # type: ignore
-            parent.remove_child(curr_node) # type: ignore
+            parent.remove_child_node(curr_node) # type: ignore
             curr_node = parent
 
 
