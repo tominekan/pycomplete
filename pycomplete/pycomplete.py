@@ -7,6 +7,7 @@ TODO: find out runtimes lol (should largely come from pycomplete/trie.py)
 from pycomplete.chainset import ChainSet
 from pycomplete.trie import Trie
 import os
+import pickle
 
 class PyComplete:
     def __init__(self, text: str) -> None:
@@ -119,6 +120,22 @@ class PyComplete:
                 self._chains.add(word, words[index+1])
             self._trie.add_word(word)
     
+    def save(self, filepath: str) -> None:
+        """
+        Saves the current PyComplete instance as a file. Raises ValueError if we're filepath is a directory.
+
+        Parameters
+        ---
+        filepath: str
+            The path to the file we want to handle
+        """
+
+        if os.path.exists(filepath) and os.path.isdir(filepath):
+            raise ValueError(f"Path \"{filepath}\" is a directory.")
+
+        with open(filepath, "wb") as f:
+            pickle.dump(self, f)
+    
 
     @staticmethod
     def from_text_file(filepath: str) -> "PyComplete":
@@ -146,3 +163,23 @@ class PyComplete:
                 p.add_line(line.strip())
         
         return p
+    
+    @staticmethod
+    def load(filepath: str) -> "PyComplete":
+        """
+        Loads the PyComplete instance from the path. Raises ValueError if filepath is a directory.
+
+        Parameters
+        ---
+        filepath: str
+            The path to the file we want to read
+        """
+
+        if not os.path.exists(filepath):
+            raise ValueError(f"Path \"{filepath}\" does not exist")
+        
+        if os.path.isdir(filepath):
+            raise ValueError(f"Path \"{filepath}\" is a directory")
+    
+        with open(filepath, "rb") as f:
+            return pickle.load(f)

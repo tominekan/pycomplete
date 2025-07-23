@@ -4,6 +4,7 @@ Test pycomplete/pycomplete.py
 
 from pycomplete.pycomplete import PyComplete
 import pytest
+import os
 
 # TEST: predict
 def test_empty_pycomplete():
@@ -191,3 +192,47 @@ def test_from_text_file_directory_fails():
 
     with pytest.raises(ValueError):
         p = PyComplete.from_text_file("tests/examples")
+
+# Test save and load functions
+def test_save_directory_fails():
+    """
+    Tests that when we try to save to a directory, we get some errors
+    """
+    
+    with pytest.raises(ValueError):
+        p = PyComplete("")
+        p.save("tests/examples/")
+
+def test_load_nonexistent_fails():
+    """
+    Tests that when we try to load from a nonexistent file, we get some errors
+    """
+
+    with pytest.raises(ValueError):
+        p = PyComplete.load("tests/examples/nonexistent.pkl")
+
+def test_load_directory_fails():
+    """
+    Tests that when we try to load from a directory, we get some errors
+    """
+
+    with pytest.raises(ValueError):
+        p = PyComplete.load("tests/examples/")
+
+def test_save_load_pipeline_works():
+    """
+    Tests that the save -> load pipeline works
+    """
+
+    p = PyComplete("no one not two note three noted four no one no two no two no two")
+    p.save("test.pkl")
+    p2 = PyComplete.load("test.pkl")
+
+    # Delete the test file now that we're done with it
+    os.remove("test.pkl")
+
+    assert p2.predict("n") == ["no", "two"]
+    assert p2.predict("no") == ["no", "two"]
+    assert p2.predict("not") == ["not", "two"]
+    assert p2.predict("note") == ["note", "three"]
+    assert p2.predict("noted") == ["noted", "four"]

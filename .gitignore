@@ -15,5 +15,6 @@ wheels/
 # Coverage
 htmlcov/
 
+
 # Virtual environments
 .venv
