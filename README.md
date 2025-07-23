@@ -5,9 +5,8 @@ I might rewrite in C++ if I get this working, might not tho, who knows.
 
 
 ## TODOS
-- [ ] Add caching/save-file for a PyComplete instances
+- [x] Add caching/save-file for a PyComplete instances
 - [ ] Figure out asymptotic runtimes for `trie.py` and `pycomplete.py` 
-- [ ] Find a service to cache PyComplete instances
 
 ### Notes
 - All of our runtime analyses are expected runtimes, not worst-case runtimes 
