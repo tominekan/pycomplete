@@ -9,13 +9,13 @@ I might rewrite in C++ if I get this working, might not tho, who knows.
 - [x] A first-order Markov chain to predict the next word based on the likeliest word
 - [x] An autocomplete system that completes words using Trie data structures, and Markov chains to predict the next word.
     - Once the word has been completed, we can use a Markov chain predict the word right after that. Not quite sure how many words ahead we should go, I think one word ahead should be ok.
-- [ ] Pretty fucking comprehensive testing for the methods I've implemented so far lol.
+- [x] Pretty fucking comprehensive testing for the methods I've implemented so far lol.
     - I know I'm likely getting something wrong and I don't want to get any hard to fix bugs.
 - [ ] Implement a method to cache both Trie and ChainSet structures so we don't have to build it every time we want to use it
     - This will likely mean that I need to use the struct or pickle package, not sure yet though
 - [ ] Maybe figure out a way to get this done over the cloud
     - [ ] Look at DataBricks Community Tier
-- [ ] Be more consistent with the method names
+- [x] Be more consistent with the method names
 
 
 ### Notes
