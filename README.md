@@ -6,6 +6,7 @@ I might rewrite in C++ if I get this working, might not tho, who knows.
 
 ## TODOS
 - [x] Add caching/save-file for a PyComplete instances
+- [ ] Come up with pipline to upload this to PyPI
 - [ ] Figure out asymptotic runtimes for `trie.py` and `pycomplete.py` 
 
 ### Notes
