@@ -6,7 +6,7 @@ I might rewrite in C++ if I get this working, might not tho, who knows.
 
 ## Installation
 ```
-pip install pycomplete
+pip install pyautocomplete
 ```
 
 ## TODOS
