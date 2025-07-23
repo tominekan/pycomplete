@@ -168,10 +168,26 @@ def test_from_text_file_single_line():
     assert p.predict("a") == ["a", "single"]
     assert p.predict("shoul") == ["should", "not"]
 
-def test_from_text_multi_line():
+def test_from_text_file_multi_line():
     """
     Tests that when we read a file with multiple lines, the program behaves as normal
     """
     p = PyComplete.from_text_file("tests/examples/multi_line.txt")
     assert p.predict("j") == ["james", "is"]
     assert p.predict("l") == ["lebron", "james"]
+
+def test_from_text_file_nonexistent_file_fails():
+    """
+    Tests that when we try to read a nonexistent file, we raise ValueError 
+    """
+
+    with pytest.raises(ValueError):
+        p = PyComplete.from_text_file("tests/examples/nonexistent.txt")
+    
+def test_from_text_file_directory_fails():
+    """
+    Tests that when we try to read a directory, we raise ValueError 
+    """
+
+    with pytest.raises(ValueError):
+        p = PyComplete.from_text_file("tests/examples")
