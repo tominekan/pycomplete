@@ -13,3 +13,4 @@ I might rewrite in C++ if I get this working, might not tho, who knows.
 - All of our runtime analyses are expected runtimes, not worst-case runtimes 
     - **NOTE**: Sometimes my analyses are all fucked up and I try to explain what I did lol
 - I think I want to be more consistent with the exceptions I raise.
+ 
