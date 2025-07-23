@@ -54,7 +54,7 @@ class Trie:
             for char in word:
                 if not curr_node.exists_child(char):
                     curr_node.add_child_node(TrieNode(char))
-                    curr_node = curr_node.get_node(char)
+                curr_node = curr_node.get_node(char)
             
             # NONE IS OUR END CHARACTER
             curr_node.add_child_node(TrieNode(None))
@@ -70,18 +70,20 @@ class Trie:
             The word specified
         """
 
-        curr_node = self._walk_word(word)
 
-        if curr_node is None:
+        if not self.exists(word):
             raise ValueError(f"\"{word}\" does not exist within Trie")
+        
+        curr_node = self._walk_word(word)
         
 
         # Remove the node the marks the end of the word
-        curr_node.remove_child(None) # Remove None Values
+        curr_node.remove_child(None) # type: ignore
 
         # NOTE: The idea is to start from the last word, removing all leaves
         # and going up the tree until we find a TrieNode with multiple children 
         while curr_node.is_leaf():  # type: ignore
+            print(f"CURRENT NODE: {curr_node}")
             parent = curr_node.parent()  # type: ignore
             parent.remove_child_node(curr_node) # type: ignore
             curr_node = parent
@@ -97,7 +99,11 @@ class Trie:
             The word we want to check the existence of
         """
 
-        return self._walk_word(word) != None
+        node = self._walk_word(word)
+        if node is None:
+            return False
+        
+        return self._walk_word(word).exists_child(None) # type: ignore
 
     
     def _walk_word(self, word) -> Union[TrieNode, None]:
@@ -121,10 +127,7 @@ class Trie:
         
         # If there is no end word end node, then this implies
         # that there does not exist a word here
-        if curr_node.exists_child(None):
-            return curr_node
-        else:
-            return None
+        return curr_node
     
     def _word_from(self, node: TrieNode):
         """
@@ -171,7 +174,6 @@ class Trie:
         curr_node = self._walk_word(chars)
         all_words = []
         num_words = 0
-        dist = 0
 
         # This means that we've fallen off the Trie structure 
         # There are no more possible words we can get from this
@@ -186,7 +188,9 @@ class Trie:
         # Do a luh BFS magic until we get the appropriate number of words we want
         curr_level = curr_node.get_children_nodes()
 
-        while (num_words < num) or (len(curr_level) == 0):
+        # Step either when we've traversed the entire tree
+        # or we've collected enough enough
+        while (num_words < num) and (len(curr_level) != 0):
             new_level = []
             for node in curr_level:
                 # This implies that a word ends
@@ -200,6 +204,7 @@ class Trie:
 
                 # Add all the children to the list 
                 new_level += node.get_children_nodes()
+                print(f"Walking node: {node}")
 
             # Replace the new level
             curr_level = new_level
