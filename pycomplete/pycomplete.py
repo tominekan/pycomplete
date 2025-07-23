@@ -5,9 +5,9 @@ TODO: find out runtimes lol (should largely come from pycomplete/trie.py)
 TODO: add methods to add word pairs to the trie
 """
 
-from typing import Union
 from pycomplete.chainset import ChainSet
 from pycomplete.trie import Trie
+import os
 
 class PyComplete:
     def __init__(self, text: str) -> None:
@@ -30,7 +30,6 @@ class PyComplete:
         words = [word for word in words if not (word.isspace() or (len(word) == 0))]
 
         self._word_count = len(words)
-        self._unique_words = len(set(words))
 
         for index, word in enumerate(words):
             # If we're not at the second to last word
@@ -88,11 +87,9 @@ class PyComplete:
         # also increment word count
         if not self._trie.exists(key):
             self._trie.add_word(key)
-            self._unique_words += 1
         
         if not self._trie.exists(value):
             self._trie.add_word(value)
-            self._unique_words += 1
         
         # We're techincally incremening the word count
         self._word_count += 2
@@ -100,3 +97,53 @@ class PyComplete:
         # Then we add it to the ChainSet
         self._chains.add(key, value)
     
+
+    def add_line(self, line: str) -> None:
+        """
+        Adds an entire line of text
+
+        Parameters
+        ---
+        line: str
+            The line we want to add to the autocomplete system
+        """
+
+        # Now we remove all empty strings/whitespace from the line
+        words = line.split(" ")
+        words = [word for word in words if not (word.isspace() or (len(word) == 0))]
+
+        self._word_count += len(words)
+
+        for index, word in enumerate(words):
+            # If we're not at the second to last word
+            if (index != len(words) - 1):
+                self._chains.add(word, words[index+1])
+            self._trie.add_word(word)
+    
+
+    @staticmethod
+    def from_text_file(filepath: str) -> "PyComplete":
+        """
+        Extracts the text from the file specified in the filepath and returns a PyComplete instance generated
+        from that text. We raise ValueError if the file we're reading is a directory or simply doesn't exist.
+
+        Parameters
+        ---
+        filepath: str
+            The path to the file we want to read
+        """
+
+        p = PyComplete("") # This should be an O(1) operation
+
+        if not os.path.exists(filepath):
+            raise ValueError(f"Path \"{filepath}\" does not exist")
+        
+        if os.path.isdir(filepath):
+            raise ValueError(f"Path \"{filepath}\" is a directory.")
+        
+        # Build the 
+        with open(filepath, "r") as f:
+            for line in f:
+                p.add_line(line.strip())
+        
+        return p

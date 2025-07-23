@@ -12,7 +12,7 @@ def test_empty_pycomplete():
     """
 
     p = PyComplete("")
-    assert len(p.predict("lebron")) == 0
+    assert p.predict("lebron") == []
 
 
 def test_singleton_pycomplete():
@@ -21,7 +21,7 @@ def test_singleton_pycomplete():
     """
 
     p = PyComplete("lebron")
-    assert len(p.predict("lebron")) == 0
+    assert p.predict("lebron") == []
 
 
 def test_predict_throws_error_num_less_one():
@@ -119,3 +119,59 @@ def test_add_pair_nonexistent_key_value():
     p.add_pair("n", "ten")
     p.add_pair("n", "ten")
     assert p.predict("n") == ["n", "ten"]
+
+# TEST: add_line
+def test_add_line_empty_line_does_nothing():
+    """
+    When we add an empty line, nothing should be changed
+    """
+
+    p = PyComplete("lebron james")
+    p.add_line("")
+    assert p.predict("lebr") == ["lebron", "james"]
+
+def test_add_line_nonempty_works():
+    """
+    When we add a non-empty line, we should see some reflected changes
+    """
+
+    p = PyComplete("lebron james")
+    assert p.predict("lebr") == ["lebron", "james"]
+
+    p.add_line("lebron is the goat lebron is the goat")
+    assert p.predict("lebr") == ["lebron", "is"]
+
+
+# TEST: from_text_file
+def test_from_text_file_empty():
+    """
+    Tests that when we read an empty file, the program behaves as normal
+    """
+
+    p = PyComplete.from_text_file("tests/examples/empty.txt")
+    assert p.predict("lebr") == []
+
+def test_from_text_file_single_word():
+    """
+    Tests that when we read a file with a single word, the program behaves as normal
+    """
+
+    p = PyComplete.from_text_file("tests/examples/single_word.txt")
+    assert p.predict("te") == []
+
+def test_from_text_file_single_line():
+    """
+    Tests that when we read a file with a single line, the program behaves as normal
+    """
+
+    p = PyComplete.from_text_file("tests/examples/single_line.txt")
+    assert p.predict("a") == ["a", "single"]
+    assert p.predict("shoul") == ["should", "not"]
+
+def test_from_text_multi_line():
+    """
+    Tests that when we read a file with multiple lines, the program behaves as normal
+    """
+    p = PyComplete.from_text_file("tests/examples/multi_line.txt")
+    assert p.predict("j") == ["james", "is"]
+    assert p.predict("l") == ["lebron", "james"]
