@@ -2,7 +2,6 @@
 Now we're putting all the helper classes together in order to get the PyComplete module.
 
 TODO: find out runtimes lol (should largely come from pycomplete/trie.py)
-TODO: add methods to add word pairs to the trie
 """
 
 from pycomplete.chainset import ChainSet
