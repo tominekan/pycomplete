@@ -1,6 +1,5 @@
 # Table of Contents
 
-* [\_\_init\_\_](#__init__)
 * [markovchain](#markovchain)
   * [MarkovChain](#markovchain.MarkovChain)
     * [\_\_init\_\_](#markovchain.MarkovChain.__init__)
@@ -47,10 +46,6 @@
     * [remove\_word](#trie.Trie.remove_word)
     * [exists](#trie.Trie.exists)
     * [complete\_word](#trie.Trie.complete_word)
-
-<a id="__init__"></a>
-
-# \_\_init\_\_
 
 <a id="markovchain"></a>
 
