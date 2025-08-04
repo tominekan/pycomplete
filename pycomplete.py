@@ -4,8 +4,8 @@ Now we're putting all the helper classes together in order to get the PyComplete
 TODO: find out runtimes lol (should largely come from pycomplete/trie.py)
 """
 
-from pycomplete.chainset import ChainSet
-from pycomplete.trie import Trie
+from chainset import ChainSet
+from trie import Trie
 import os
 import pickle
 

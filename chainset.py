@@ -3,7 +3,7 @@ This allows us to use and manipulate a bunch first-order Markov chains.
 """
 
 from typing import Any
-from pycomplete.markovchain import MarkovChain
+from markovchain import MarkovChain
 
 class ChainSet:
     def __init__(self) -> None:

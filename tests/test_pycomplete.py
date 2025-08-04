@@ -1,8 +1,8 @@
 """
-Test pycomplete/pycomplete.py
+Test pycomplete.py
 """
 
-from pycomplete.pycomplete import PyComplete
+from pycomplete import PyComplete
 import pytest
 import os
 

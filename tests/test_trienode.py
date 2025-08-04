@@ -1,8 +1,8 @@
 """
-Test pycomplete/trienode.py
+Test trienode.py
 """
 
-from pycomplete.trienode import TrieNode
+from trienode import TrieNode
 import pytest
 
 # TEST: init and getters
