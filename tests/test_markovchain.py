@@ -1,8 +1,8 @@
 """
-Test markovchain.py
+Test pycomplete/markovchain.py
 """
 
-from markovchain import MarkovChain
+from pycomplete.markovchain import MarkovChain
 import pytest
 
 

@@ -1,8 +1,8 @@
 """
-Test chainset.py
+Test pycomplete/chainset.py
 """
 
-from chainset import ChainSet
+from pycomplete.chainset import ChainSet
 import pytest
 
 # TEST: add

@@ -1,8 +1,8 @@
 """
-Test trie.py
+Test pycomplete/trie.py
 """
 
-from trie import Trie
+from pycomplete.trie import Trie
 import pytest
 
 # Test initialization (likely will test some other functions too)

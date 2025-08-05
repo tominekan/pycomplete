@@ -11,7 +11,7 @@ which should techincally be the length of the longest string for the uncompresse
 I think it should still be the same for the compressed trie.
 """
 
-from trienode import TrieNode
+from pycomplete.trienode import TrieNode
 from typing import Union
 
 class Trie:
