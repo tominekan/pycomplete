@@ -176,7 +176,7 @@ class Trie:
         num_words = 0
 
         # This means that we've fallen off the Trie structure 
-        # There are no more possible words we can get from this
+        # This set of characters isn't in the Trie structure
         if curr_node is None:
             return []
         

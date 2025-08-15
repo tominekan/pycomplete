@@ -50,7 +50,9 @@ class PyComplete:
             The given sequence of characters
 
         num: int
-            How many words ahead do we want to predict. By default, we predict one word ahead.
+            How many words ahead do we want to predict. By default, we predict one word ahead. Now, if we get at a word
+            that doesn't have any following words after it, then we return the list of predictions, even if it's less
+            than `num`
         """
 
         if num < 1:
@@ -64,10 +66,22 @@ class PyComplete:
             return []
         
         result = []
-        result.append(self._trie.complete_word(text, num=1)[0])
+        completed_words = self._trie.complete_word(text.strip(), num=1)
 
-        for i in range(0, num):
-            result.append(self._chains.likeliest(result[i]))
+        # This implies `text` is NOT within the trie.
+        if (completed_words == []):
+            return [text.strip()]
+        
+        result.append(completed_words[0])
+
+        # Keep predicting further ahead until we either get an error 
+        # (this implies that the completed/predicted word doesn't have any following characters)
+        # or we don't need to predict any further ahead 
+        try:
+            for i in range(0, num):
+                result.append(self._chains.likeliest(result[i]))
+        except ValueError:
+            return result
 
         return result
     
