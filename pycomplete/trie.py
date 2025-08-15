@@ -83,7 +83,6 @@ class Trie:
         # NOTE: The idea is to start from the last word, removing all leaves
         # and going up the tree until we find a TrieNode with multiple children 
         while curr_node.is_leaf():  # type: ignore
-            print(f"CURRENT NODE: {curr_node}")
             parent = curr_node.parent()  # type: ignore
             parent.remove_child_node(curr_node) # type: ignore
             curr_node = parent
@@ -204,7 +203,6 @@ class Trie:
 
                 # Add all the children to the list 
                 new_level += node.get_children_nodes()
-                print(f"Walking node: {node}")
 
             # Replace the new level
             curr_level = new_level
